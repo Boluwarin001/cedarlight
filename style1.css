@@ -21,7 +21,7 @@
   --card-scale: min(
     1,
     calc((100dvh - 230px) / 540px),
-    calc((100vw - 60px) / 1050px)
+    calc((100vw - 60px) / 810px)
   );
 }
 
