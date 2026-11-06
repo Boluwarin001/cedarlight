@@ -47,10 +47,10 @@
             z-index: 10;
             color: white;
             background: rgba(18, 66, 84, 0.55);
-            padding: 8px 22px;
+            padding: 8px 24px;
             border-radius: 30px;
             backdrop-filter: blur(5px);
-            font-size: 0.9rem;
+            font-size: 0.92rem;
         }
 
         .top-bar span {
@@ -77,7 +77,7 @@
             transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Shifts book so the open 2-page spread stays dead-center on screen */
+        /* Shifts book so the open 2-page spread stays centered on screen */
         .book-wrapper.open {
             transform: translateX(calc(var(--page-width) / 2));
         }
@@ -220,9 +220,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
             overflow: hidden;
-            cursor: pointer;
         }
 
         .logo-frame img {
@@ -334,14 +332,13 @@
             font-weight: 600;
         }
 
-        /* Polaroid Photo Frames (Clickable to upload!) */
+        /* Polaroid Photo Frames */
         .polaroid {
             background: white;
-            padding: 9px 9px 25px 9px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+            padding: 9px 9px 26px 9px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.14);
             border-radius: 4px;
             position: relative;
-            cursor: pointer;
             transition: transform 0.25s ease;
             border: 1px solid #e2e8f0;
         }
@@ -351,29 +348,19 @@
         }
         .polaroid-img {
             width: 100%;
-            height: 140px;
-            background: #e6f0f5;
-            border: 2px dashed #7faec7;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #2b6cb0;
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-align: center;
-            padding: 10px;
+            height: 155px;
+            background-color: #e6f0f5;
             background-size: cover;
             background-position: center;
             border-radius: 2px;
         }
         .polaroid-caption {
             font-family: 'Caveat', cursive;
-            font-size: 1.2rem;
+            font-size: 1.22rem;
             color: #2d3748;
             text-align: center;
             position: absolute;
-            bottom: 2px;
+            bottom: 3px;
             left: 0; right: 0;
         }
 
@@ -439,19 +426,13 @@
             z-index: 2;
             pointer-events: none;
         }
-
-        #photoInput { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- Hidden file uploader so you can click any placeholder to add a photo! -->
-    <input type="file" id="photoInput" accept="image/*">
-
-    <!-- Top Instructions Bar -->
+    <!-- Top Header Pill -->
     <div class="top-bar">
-        <span>🎄 <strong>Cedarlight Evangelical Ministry</strong></span>
-        <span style="font-size: 0.8rem; opacity: 0.85;">(💡 Click any photo frame to drop in your pictures!)</span>
+        <span>🎄 <strong>Cedarlight Evangelical Ministry</strong> — Christmas Partner Appreciation</span>
     </div>
 
     <div class="stage">
@@ -464,8 +445,8 @@
                 
                 <!-- PAGE 1: FRONT COVER -->
                 <div class="page-face page-front cover-design" onclick="flipNext(1)">
-                    <div class="logo-frame" onclick="uploadPhoto(event, this)" title="Click to add Cedarlight Logo">
-                        <img src="logo.jpg" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:#0B3B60;font-size:0.75rem;font-weight:700;\'>Click to Insert<br>Cedarlight Logo</span>'">
+                    <div class="logo-frame">
+                        <img src="logo.jpeg" alt="Cedarlight Evangelical Ministry Logo">
                     </div>
 
                     <div>
@@ -473,21 +454,23 @@
                             <span class="red">MERRY</span> <span class="mint">CHRISTMAS</span>
                             <span class="gold">FROM CEDARLIGHT EVANGELICAL MINISTRY</span>
                         </div>
-                        <p class="handwritten-sub" style="margin-top: 6px;">Shining the Light of Christ ✨</p>
+                        <p class="handwritten-sub" style="margin-top: 8px;">Shining the Light of Christ ✨</p>
                     </div>
 
-                    <div class="polaroid" style="width: 84%; transform: rotate(-2deg);" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                        <div class="polaroid-img" style="height: 120px;">
-                            📸 Click to add Cover Photo<br>(Team or Ministry Outreach)
-                        </div>
-                        <div class="polaroid-caption">Touching heaven, changing lives...</div>
+                    <div style="background: rgba(255,255,255,0.12); padding: 14px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.25); width: 88%;">
+                        <p style="font-family: 'Caveat', cursive; font-size: 1.5rem; color: var(--gold);">
+                            "Touching heaven, changing lives..."
+                        </p>
+                        <p style="font-size: 0.78rem; opacity: 0.9; margin-top: 2px;">
+                            A special Christmas note of gratitude for our precious partners
+                        </p>
                     </div>
 
                     <div class="open-badge">Click to Open Card ➔</div>
                     <div class="corner-peel" onclick="flipNext(1); event.stopPropagation();">►►</div>
                 </div>
 
-                <!-- PAGE 2: SPREAD 1 LEFT (Heartfelt Thank You + Photo) -->
+                <!-- PAGE 2: SPREAD 1 LEFT (Heartfelt Thank You + outreach-1.jpeg) -->
                 <div class="page-face page-back">
                     <div class="page-content">
                         <div>
@@ -504,14 +487,12 @@
                             ❤️ We do not take you for granted. You are part of every testimony.
                         </div>
 
-                        <div class="polaroid" style="transform: rotate(-2deg); width: 92%; margin: 0 auto;" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                            <div class="polaroid-img" style="height: 145px;">
-                                📸 Click to add Outreach Photo 1<br>(Communities in Nigeria & Beyond)
-                            </div>
+                        <div class="polaroid" style="transform: rotate(-2deg); width: 94%; margin: 0 auto;">
+                            <div class="polaroid-img" style="height: 155px; background-image: url('photos/outreach-1.jpeg');"></div>
                             <div class="polaroid-caption">You are part of every testimony!</div>
                         </div>
 
-                        <div style="height: 10px;"></div>
+                        <div style="height: 8px;"></div>
                     </div>
                     <div class="corner-peel-left" onclick="flipPrev(1)">◄◄</div>
                 </div>
@@ -520,7 +501,7 @@
             <!-- ============= LEAF 2 (Page 3 Right & Page 4 Left) ============= -->
             <div class="leaf" id="leaf2" style="z-index: 4;">
                 
-                <!-- PAGE 3: SPREAD 1 RIGHT (Scriptures + Field Photo) -->
+                <!-- PAGE 3: SPREAD 1 RIGHT (Scriptures + outreach-2.jpeg) -->
                 <div class="page-face page-front">
                     <div class="page-content">
                         <div class="scripture-card blue-top" style="transform: rotate(1deg);">
@@ -530,10 +511,8 @@
                             </p>
                         </div>
 
-                        <div class="polaroid" style="transform: rotate(2deg); width: 92%; margin: 0 auto;" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                            <div class="polaroid-img" style="height: 145px;">
-                                📸 Click to add Outreach Photo 2<br>(Hospital Evangelism / Feeding / Crusades)
-                            </div>
+                        <div class="polaroid" style="transform: rotate(2deg); width: 94%; margin: 0 auto;">
+                            <div class="polaroid-img" style="height: 155px; background-image: url('photos/outreach-2.jpeg');"></div>
                             <div class="polaroid-caption">Shining the light of Christ together</div>
                         </div>
 
@@ -551,7 +530,7 @@
                     <div class="corner-peel" onclick="flipNext(2)">►►</div>
                 </div>
 
-                <!-- PAGE 4: SPREAD 2 LEFT (Vision & Mission + Photos) -->
+                <!-- PAGE 4: SPREAD 2 LEFT (Vision & Mission + outreach-3.jpeg) -->
                 <div class="page-face page-back">
                     <div class="page-content">
                         <div class="cursive-header" style="text-align: center;">The Vision You Support</div>
@@ -569,19 +548,9 @@
                             </div>
                         </div>
 
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <div class="polaroid" style="transform: rotate(-2deg); padding-bottom: 20px;" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                                <div class="polaroid-img" style="height: 85px;">
-                                    📸 Photo 3<br>(Medical / Bills)
-                                </div>
-                                <div class="polaroid-caption" style="font-size: 0.95rem;">Healing the Sick</div>
-                            </div>
-                            <div class="polaroid" style="transform: rotate(2deg); padding-bottom: 20px;" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                                <div class="polaroid-img" style="height: 85px;">
-                                    📸 Photo 4<br>(Bibles / Relief)
-                                </div>
-                                <div class="polaroid-caption" style="font-size: 0.95rem;">Winning Souls</div>
-                            </div>
+                        <div class="polaroid" style="transform: rotate(-1.5deg); width: 92%; margin: 0 auto;">
+                            <div class="polaroid-img" style="height: 115px; background-image: url('photos/outreach-3.jpeg');"></div>
+                            <div class="polaroid-caption">Healing the sick & winning souls</div>
                         </div>
                     </div>
                     <div class="corner-peel-left" onclick="flipPrev(2)">◄◄</div>
@@ -591,7 +560,7 @@
             <!-- ============= LEAF 3 (Page 5 Right & Page 6 Left) ============= -->
             <div class="leaf" id="leaf3" style="z-index: 3;">
                 
-                <!-- PAGE 5: SPREAD 2 RIGHT (6 Core Values + Photo) -->
+                <!-- PAGE 5: SPREAD 2 RIGHT (6 Core Values + outreach-4.jpeg) -->
                 <div class="page-face page-front">
                     <div class="page-content">
                         <div class="cursive-header" style="text-align: center;">Our Core Values</div>
@@ -623,10 +592,8 @@
                             </div>
                         </div>
 
-                        <div class="polaroid" style="transform: rotate(-1deg); width: 92%; margin: 0 auto;" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                            <div class="polaroid-img" style="height: 110px;">
-                                📸 Click to add Outreach Photo 5<br>(Feeding the Hungry & Clothing the Naked)
-                            </div>
+                        <div class="polaroid" style="transform: rotate(1.5deg); width: 92%; margin: 0 auto;">
+                            <div class="polaroid-img" style="height: 120px; background-image: url('photos/outreach-4.jpeg');"></div>
                             <div class="polaroid-caption">Compassion in Action!</div>
                         </div>
                     </div>
@@ -635,10 +602,10 @@
 
                 <!-- PAGE 6: SPREAD 3 LEFT (Christmas Blessings & Luke 2:11 / Jer 29:11) -->
                 <div class="page-face page-back">
-                    <div class="page-content">
-                        <div class="cursive-header">Christmas Blessings</div>
+                    <div class="page-content" style="justify-content: space-around;">
+                        <div class="cursive-header" style="text-align: center;">Christmas Blessings</div>
 
-                        <p class="letter-text">
+                        <p class="letter-text" style="text-align: center; font-size: 0.92rem;">
                             As we celebrate the birth of our Saviour, we pray that the joy of Christmas will fill your home, and the peace of Christ will rest upon your family.
                         </p>
 
@@ -656,12 +623,7 @@
                             </p>
                         </div>
 
-                        <div class="polaroid" style="transform: rotate(-1.5deg); width: 90%; margin: 0 auto;" onclick="uploadPhoto(event, this.querySelector('.polaroid-img'))">
-                            <div class="polaroid-img" style="height: 105px;">
-                                📸 Click to add Photo 6<br>(Ministry Team / Celebration)
-                            </div>
-                            <div class="polaroid-caption">Rejoicing in the birth of our Saviour!</div>
-                        </div>
+                        <div style="height: 15px;"></div>
                     </div>
                     <div class="corner-peel-left" onclick="flipPrev(3)">◄◄</div>
                 </div>
@@ -684,7 +646,7 @@
                         </div>
 
                         <div>
-                            <h3 style="font-family: 'Fredoka', sans-serif; color: var(--crimson); font-size: 1.35rem;">
+                            <h3 style="font-family: 'Fredoka', sans-serif; color: var(--crimson); font-size: 1.4rem;">
                                 Merry Christmas and a<br>Glorious New Year!
                             </h3>
                         </div>
@@ -705,8 +667,8 @@
                 <!-- PAGE 8: BACK COVER -->
                 <div class="page-face page-back cover-design">
                     <div style="margin-top: 30px;">
-                        <div class="logo-frame" style="width: 120px; height: 120px; margin: 0 auto 20px;" onclick="uploadPhoto(event, this)">
-                            <img src="logo.jpg" onerror="this.style.display='none'; this.parentNode.innerHTML='<span style=\'color:#0B3B60;font-size:0.7rem;font-weight:700;\'>Click to Insert<br>Logo</span>'">
+                        <div class="logo-frame" style="width: 125px; height: 125px; margin: 0 auto 20px;">
+                            <img src="logo.jpeg" alt="Cedarlight Evangelical Ministry Logo">
                         </div>
                         <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.9rem; color: var(--gold);">
                             CEDARLIGHT EVANGELICAL MINISTRY
@@ -794,33 +756,6 @@
             setTimeout(() => flipPrev(2), 360);
             setTimeout(() => flipPrev(1), 540);
         }
-
-        // Click-to-upload image helper!
-        let currentTargetBox = null;
-        const photoInput = document.getElementById('photoInput');
-
-        function uploadPhoto(event, element) {
-            event.stopPropagation();
-            currentTargetBox = element;
-            photoInput.click();
-        }
-
-        photoInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && currentTargetBox) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    if (currentTargetBox.classList.contains('logo-frame')) {
-                        currentTargetBox.innerHTML = `<img src="${event.target.result}">`;
-                    } else {
-                        currentTargetBox.style.backgroundImage = `url('${event.target.result}')`;
-                        currentTargetBox.style.border = 'none';
-                        currentTargetBox.innerHTML = '';
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-        });
     </script>
 </body>
 </html>
