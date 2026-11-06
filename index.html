@@ -1,0 +1,1140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e8f4f7">
+<meta name="description" content="A special Christmas message of love and gratitude from Cedarlight Evangelical Ministry.">
+<title>Merry Christmas | Cedarlight Evangelical Ministry</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #102d48;
+  --navy-dark: #071d31;
+  --blue: #246d91;
+  --gold: #c69a51;
+  --gold-light: #e9c587;
+  --cream: #fffaf0;
+  --ink: #263d4b;
+  --muted: #627985;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "DM Sans", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 15% 15%, #ffffff, transparent 35%),
+    radial-gradient(ellipse at 90% 85%, #a9d6e4, transparent 40%),
+    linear-gradient(160deg, #d7edf5, #f4faff);
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 4px;
+}
+
+/* BACKGROUND DECORATION */
+
+.background-glow {
+  position: fixed;
+  width: 650px;
+  height: 650px;
+  border-radius: 50%;
+  background: #ffffff70;
+  filter: blur(100px);
+  top: -250px;
+  left: -200px;
+  pointer-events: none;
+}
+
+.snow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.flake {
+  position: absolute;
+  top: -30px;
+  color: white;
+  opacity: .8;
+  animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+  from {
+    transform: translateY(-20px) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(180deg);
+  }
+}
+
+/* HEADER */
+
+header {
+  position: relative;
+  z-index: 5;
+  padding: 25px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--navy);
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.brand img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 3px;
+}
+
+.header-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #5d879b;
+  text-transform: uppercase;
+}
+
+/* MAIN */
+
+main {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 20px 50px;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #4d89a3;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  margin: 10px 0 8px;
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 43px);
+  color: var(--navy);
+}
+
+.intro p {
+  margin: 0;
+  font-size: 14px;
+  color: #668a9b;
+}
+
+/* BOOK */
+
+.book-area {
+  position: relative;
+  width: min(100%, 1050px);
+  perspective: 1800px;
+}
+
+.book-stack {
+  position: absolute;
+  inset: 12px 5px -10px;
+  background: #c4d7df;
+  border-radius: 8px;
+  transform: rotate(1.2deg);
+  box-shadow: 0 25px 55px #174e6b25;
+}
+
+.book-stack::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: #e1e9e9;
+  border-radius: 8px;
+  transform: rotate(-1.8deg);
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  min-height: 540px;
+  background: #fffdf7;
+  border-radius: 8px;
+  box-shadow:
+    0 35px 75px #174e6b2c,
+    0 4px 15px #174e6b20;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+
+/* PAGE TURN ANIMATION */
+
+.page {
+  display: none;
+  width: 100%;
+  min-height: 540px;
+  transform-origin: left center;
+}
+
+.page.active {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  animation: pageEnter .65s cubic-bezier(.2,.75,.2,1) both;
+}
+
+.page.turn-back.active {
+  animation: pageBack .65s cubic-bezier(.2,.75,.2,1) both;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: .15;
+    transform: rotateY(-22deg) translateX(22px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0) translateX(0);
+  }
+}
+
+@keyframes pageBack {
+  from {
+    opacity: .15;
+    transform: rotateY(22deg) translateX(-22px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0) translateX(0);
+  }
+}
+
+/* PAGE PANELS */
+
+.panel {
+  position: relative;
+  min-width: 0;
+  min-height: 540px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.panel.paper {
+  background:
+    radial-gradient(circle at 95% 5%, #f5e8d2a0, transparent 30%),
+    var(--cream);
+}
+
+.panel.paper::after {
+  content: "✦";
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+  color: #d8b77c70;
+  font-size: 32px;
+  pointer-events: none;
+}
+
+.panel.paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: #d6cfc1;
+  box-shadow: 3px 0 10px #0000000c;
+}
+
+/* CHRISTMAS COVER */
+
+.cover {
+  background:
+    radial-gradient(circle at 50% 25%, #23577c, transparent 60%),
+    linear-gradient(145deg, #123652, #071b2e);
+  color: white;
+  align-items: center;
+  text-align: center;
+}
+
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 19px;
+  border: 1px solid #c69a5170;
+  pointer-events: none;
+}
+
+.cover::after {
+  content: "✦";
+  position: absolute;
+  top: 32px;
+  right: 38px;
+  color: var(--gold-light);
+  font-size: 27px;
+}
+
+.cover-logo {
+  width: 112px;
+  height: 112px;
+  object-fit: contain;
+  background: white;
+  border-radius: 50%;
+  padding: 7px;
+  margin-bottom: 26px;
+  box-shadow: 0 8px 30px #00000025;
+}
+
+.script {
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(58px, 6.5vw, 90px);
+  line-height: 1.02;
+  color: var(--gold-light);
+  font-weight: 400;
+}
+
+.cover h2 {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 20px 0 25px;
+}
+
+.cover p {
+  font-size: 11px;
+  letter-spacing: 2px;
+  line-height: 2;
+  color: #d9e5eb;
+  text-transform: uppercase;
+}
+
+.gold-line {
+  width: 65px;
+  height: 1px;
+  background: var(--gold-light);
+  margin: 0 auto 20px;
+}
+
+.gold-star {
+  color: var(--gold-light);
+  font-size: 56px;
+  margin-bottom: 25px;
+}
+
+/* TYPOGRAPHY */
+
+.small-title {
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.paper h2 {
+  font-family: "Playfair Display", serif;
+  color: var(--navy);
+  font-weight: 500;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.2;
+  margin: 0 0 20px;
+}
+
+.paper p {
+  color: #526a76;
+  font-size: 13.5px;
+  line-height: 1.85;
+  margin: 0 0 15px;
+}
+
+.gold-rule {
+  width: 45px;
+  height: 2px;
+  background: var(--gold);
+  margin: 5px 0 25px;
+}
+
+.quote {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 17px !important;
+  line-height: 1.7 !important;
+  color: var(--navy) !important;
+}
+
+.verse {
+  color: var(--gold);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 5px 0 18px;
+}
+
+.signature {
+  margin-top: 15px;
+  font-family: "Great Vibes", cursive;
+  font-size: 36px;
+  color: var(--blue);
+}
+
+/* PHOTO PANEL */
+
+.photo-panel {
+  position: relative;
+  padding: 0;
+  background: #c1d9df;
+}
+
+.photo-panel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+.photo-placeholder {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(140deg, #94c5ce, #286b86);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 30px;
+  gap: 15px;
+}
+
+.photo-placeholder .symbol {
+  font-size: 55px;
+  font-family: "Playfair Display", serif;
+}
+
+.photo-placeholder strong {
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.photo-placeholder small {
+  font-size: 12px;
+  opacity: .8;
+}
+
+/* PHOTO GALLERY */
+
+.gallery-panel {
+  padding: 22px;
+  background: #eaf3f3;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 235px 235px;
+  gap: 12px;
+  height: 100%;
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #9cc8d2;
+}
+
+.gallery-item:first-child {
+  grid-column: span 2;
+}
+
+.gallery-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+.gallery-fallback {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #c2e1df, #5694ab);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+  padding: 15px;
+  font-size: 13px;
+}
+
+.gallery-fallback span {
+  font-size: 34px;
+}
+
+/* CONTROLS */
+
+.controls {
+  width: min(100%, 1050px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.nav-btn {
+  border: 1px solid #afcfdb;
+  border-radius: 30px;
+  padding: 13px 24px;
+  background: #ffffffc9;
+  color: var(--navy);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  transition: .2s ease;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+  transform: translateY(-2px);
+}
+
+.nav-btn:disabled {
+  opacity: .3;
+  cursor: not-allowed;
+}
+
+.dots {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #a4c9d6;
+  cursor: pointer;
+  transition: .25s;
+}
+
+.dot.active {
+  width: 26px;
+  border-radius: 10px;
+  background: var(--navy);
+}
+
+.counter {
+  margin-top: 17px;
+  color: #7b9aa8;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+/* DECORATIVE TREES */
+
+.trees {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: .4;
+  background:
+    linear-gradient(135deg, transparent 50%, #2a7a98 50%)
+      left bottom / 75px 75px repeat-x;
+  clip-path: polygon(
+    0 100%, 2% 40%, 4% 100%,
+    8% 100%, 10% 20%, 12% 100%,
+    17% 100%, 19% 50%, 21% 100%,
+    79% 100%, 81% 45%, 83% 100%,
+    88% 100%, 90% 20%, 92% 100%,
+    96% 100%, 98% 45%, 100% 100%
+  );
+}
+
+/* MOBILE */
+
+@media (max-width: 720px) {
+  header {
+    padding: 18px 20px;
+  }
+
+  .brand {
+    font-size: 12px;
+  }
+
+  .brand img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .header-label {
+    display: none;
+  }
+
+  main {
+    padding: 15px 12px 40px;
+  }
+
+  .intro {
+    margin-bottom: 22px;
+  }
+
+  .intro h1 {
+    font-size: 29px;
+  }
+
+  .intro p {
+    font-size: 12px;
+  }
+
+  .book,
+  .page {
+    min-height: 0;
+  }
+
+  .page.active {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    min-height: 0;
+    padding: 35px 28px;
+  }
+
+  .cover {
+    min-height: 440px;
+  }
+
+  .cover-logo {
+    width: 95px;
+    height: 95px;
+  }
+
+  .panel.paper {
+    padding: 40px 28px;
+  }
+
+  .paper h2 {
+    font-size: 30px;
+  }
+
+  .paper p {
+    font-size: 13px;
+    line-height: 1.85;
+  }
+
+  .photo-panel {
+    min-height: 320px;
+  }
+
+  .gallery-panel {
+    padding: 12px;
+    min-height: 340px;
+  }
+
+  .gallery {
+    grid-template-rows: 155px 155px;
+  }
+
+  .controls {
+    margin-top: 25px;
+  }
+
+  .nav-btn {
+    padding: 11px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-glow"></div>
+<div class="snow" id="snow" aria-hidden="true"></div>
+<div class="trees" aria-hidden="true"></div>
+
+<header>
+  <div class="brand">
+    <img src="logo.jpeg" alt="Cedarlight Evangelical Ministry logo">
+    <span>Cedarlight Evangelical Ministry</span>
+  </div>
+
+  <span class="header-label">Christmas Greetings • 2026</span>
+</header>
+
+<main>
+
+  <div class="intro">
+    <div class="eyebrow">A special message for our partners</div>
+    <h1>A Season of Love & Gratitude</h1>
+    <p>A Christmas greeting from our hearts to yours.</p>
+  </div>
+
+  <div class="book-area">
+    <div class="book-stack"></div>
+
+    <div class="book" id="book">
+
+      <!-- PAGE 1: CHRISTMAS COVER -->
+      <section class="page active">
+
+        <div class="panel cover">
+          <img class="cover-logo" src="logo.jpeg" alt="Ministry logo">
+
+          <div class="script">Merry</div>
+          <div class="script">Christmas</div>
+
+          <h2>& A Glorious New Year</h2>
+          <div class="gold-line"></div>
+
+          <p>
+            From Cedarlight<br>
+            Evangelical Ministry
+          </p>
+        </div>
+
+        <div class="panel paper">
+          <div class="small-title">A Christmas Message • 2026</div>
+
+          <h2>Dear Precious Partners,</h2>
+          <div class="gold-rule"></div>
+
+          <p class="quote">
+            From the bottom of our hearts,
+            we say thank you.
+          </p>
+
+          <p>
+            Thank you for standing with us, praying with us,
+            giving, serving, and believing in the vision God
+            gave to Cedarlight Evangelical Ministry
+            throughout this year.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- PAGE 2: GRATITUDE -->
+      <section class="page">
+
+        <div class="panel photo-panel">
+          <img src="photos/team.jpeg"
+               alt="Cedarlight ministry team"
+               onerror="this.style.display='none'">
+
+          <div class="photo-placeholder">
+            <span class="symbol">♡</span>
+            <strong>Our Ministry Family</strong>
+            <small>Replace with photos/team.jpg</small>
+          </div>
+        </div>
+
+        <div class="panel paper">
+          <div class="small-title">With heartfelt gratitude</div>
+
+          <h2>You are part of every testimony.</h2>
+          <div class="gold-rule"></div>
+
+          <p>
+            Because of your love and sacrifice, souls were won,
+            lives were healed, and the light of Christ shone
+            brighter in different communities within Nigeria
+            and beyond.
+          </p>
+
+          <p>
+            We do not take you for granted.
+            You are part of every testimony.
+          </p>
+
+          <p class="quote">
+            "I thank my God upon every remembrance of you,
+            Always in every prayer of mine for you all making
+            request with joy, For your fellowship in the gospel
+            from the first day until now."
+          </p>
+
+          <div class="verse">Philippians 1:3–5</div>
+        </div>
+
+      </section>
+
+      <!-- PAGE 3: IMPACT AND BLESSING -->
+      <section class="page">
+
+        <div class="panel paper">
+          <div class="small-title">Our prayer for you</div>
+
+          <h2>May His grace abound toward you.</h2>
+          <div class="gold-rule"></div>
+
+          <p class="quote">
+            "And God is able to make all grace abound toward you;
+            that ye, always having all sufficiency in all things,
+            may abound to every good work."
+          </p>
+
+          <div class="verse">2 Corinthians 9:8</div>
+
+          <p>
+            As we celebrate the birth of our Saviour,
+            we pray that the joy of Christmas will fill
+            your home, and the peace of Christ will rest
+            upon your family.
+          </p>
+        </div>
+
+        <div class="panel gallery-panel">
+          <div class="gallery">
+
+            <div class="gallery-item">
+              <img src="photos/outreach-1.jpeg"
+                   alt="Ministry outreach"
+                   onerror="this.style.display='none'">
+
+              <div class="gallery-fallback">
+                <span>✦</span>
+                Sharing the Gospel
+              </div>
+            </div>
+
+            <div class="gallery-item">
+              <img src="photos/outreach-2.jpeg"
+                   alt="Community outreach"
+                   onerror="this.style.display='none'">
+
+              <div class="gallery-fallback">
+                <span>♡</span>
+                Compassion in Action
+              </div>
+            </div>
+
+            <div class="gallery-item">
+              <img src="photos/outreach-3.jpeg"
+                   alt="Ministry in the field"
+                   onerror="this.style.display='none'">
+
+              <div class="gallery-fallback">
+                <span>✧</span>
+                Touching Lives
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- PAGE 4: CHRISTMAS BLESSING -->
+      <section class="page">
+
+        <div class="panel cover">
+          <div class="gold-star">✦</div>
+
+          <div class="script">Peace, Joy</div>
+          <div class="script">& Love</div>
+
+          <h2>To You and Your Family</h2>
+          <div class="gold-line"></div>
+
+          <p>
+            Merry Christmas<br>
+            and a Glorious New Year!
+          </p>
+        </div>
+
+        <div class="panel paper">
+          <div class="small-title">The promise of Christmas</div>
+
+          <p class="quote">
+            "For unto you is born this day in the city of David
+            a Saviour, which is Christ the Lord."
+          </p>
+          <div class="verse">Luke 2:11</div>
+
+          <div class="gold-rule"></div>
+
+          <p class="quote">
+            "For I know the thoughts that I think toward you,
+            saith the LORD, thoughts of peace, and not of evil,
+            to give you an expected end."
+          </p>
+          <div class="verse">Jeremiah 29:11</div>
+
+          <p>
+            May the New Year bring you open doors, divine health,
+            and abundant harvest for all you have sown
+            into the Kingdom.
+          </p>
+
+          <p>
+            We love you, we honour you, and we celebrate you.
+          </p>
+
+          <div class="signature">With love and gratitude,</div>
+
+          <p style="font-weight:700;color:#102d48;margin-top:8px">
+            Cedarlight Evangelical Ministry
+          </p>
+
+          <p style="font-style:italic;font-size:12px">
+            Shining the Light of Christ
+          </p>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <div class="controls">
+    <button class="nav-btn" id="prev" onclick="changePage(-1)">
+      ← Previous
+    </button>
+
+    <div class="dots" id="dots"></div>
+
+    <button class="nav-btn" id="next" onclick="changePage(1)">
+      Next Page →
+    </button>
+  </div>
+
+  <div class="counter" id="counter"></div>
+
+</main>
+
+<script>
+const pages = Array.from(document.querySelectorAll(".page"));
+const dotsContainer = document.getElementById("dots");
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
+const counter = document.getElementById("counter");
+
+let currentPage = 0;
+let previousPage = 0;
+
+// Create page indicators
+pages.forEach((page, index) => {
+  const dot = document.createElement("button");
+
+  dot.className = "dot";
+  dot.type = "button";
+  dot.setAttribute("aria-label", `Go to page ${index + 1}`);
+
+  dot.addEventListener("click", () => showPage(index));
+
+  dotsContainer.appendChild(dot);
+});
+
+function showPage(index) {
+  if (index < 0 || index >= pages.length) return;
+
+  previousPage = currentPage;
+  currentPage = index;
+
+  pages.forEach((page, i) => {
+    page.classList.remove("active", "turn-back");
+
+    if (i === currentPage) {
+      if (currentPage < previousPage) {
+        page.classList.add("turn-back");
+      }
+
+      page.classList.add("active");
+    }
+  });
+
+  Array.from(dotsContainer.children).forEach((dot, i) => {
+    dot.classList.toggle("active", i === currentPage);
+
+    if (i === currentPage) {
+      dot.setAttribute("aria-current", "page");
+    } else {
+      dot.removeAttribute("aria-current");
+    }
+  });
+
+  prevButton.disabled = currentPage === 0;
+  nextButton.disabled = currentPage === pages.length - 1;
+
+  nextButton.textContent =
+    currentPage === pages.length - 1
+      ? "The End ♥"
+      : "Next Page →";
+
+  counter.textContent =
+    `PAGE ${currentPage + 1} OF ${pages.length}`;
+}
+
+function changePage(direction) {
+  showPage(currentPage + direction);
+}
+
+// Keyboard navigation
+document.addEventListener("keydown", event => {
+  if (event.key === "ArrowRight") {
+    changePage(1);
+  }
+
+  if (event.key === "ArrowLeft") {
+    changePage(-1);
+  }
+});
+
+// Touch swipe navigation
+let touchStartX = 0;
+let touchStartY = 0;
+
+const book = document.getElementById("book");
+
+book.addEventListener("touchstart", event => {
+  touchStartX = event.changedTouches[0].screenX;
+  touchStartY = event.changedTouches[0].screenY;
+}, { passive: true });
+
+book.addEventListener("touchend", event => {
+  const diffX =
+    touchStartX - event.changedTouches[0].screenX;
+
+  const diffY =
+    touchStartY - event.changedTouches[0].screenY;
+
+  if (
+    Math.abs(diffX) > 65 &&
+    Math.abs(diffX) > Math.abs(diffY)
+  ) {
+    changePage(diffX > 0 ? 1 : -1);
+  }
+}, { passive: true });
+
+// Gentle snowfall
+const snowContainer = document.getElementById("snow");
+
+const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (!reducedMotion) {
+  for (let i = 0; i < 35; i++) {
+    const flake = document.createElement("span");
+
+    flake.className = "flake";
+    flake.textContent = Math.random() > .5 ? "✦" : "•";
+
+    flake.style.left = Math.random() * 100 + "%";
+    flake.style.fontSize =
+      (5 + Math.random() * 9) + "px";
+
+    flake.style.animationDuration =
+      (12 + Math.random() * 18) + "s";
+
+    flake.style.animationDelay =
+      (-Math.random() * 30) + "s";
+
+    snowContainer.appendChild(flake);
+  }
+}
+
+// Hide photo placeholders when images load
+document.querySelectorAll(
+  ".photo-panel, .gallery-item"
+).forEach(container => {
+  const image = container.querySelector("img");
+
+  const placeholder = container.querySelector(
+    ".photo-placeholder, .gallery-fallback"
+  );
+
+  if (!image || !placeholder) return;
+
+  function checkImage() {
+    if (image.complete && image.naturalWidth > 0) {
+      placeholder.style.display = "none";
+    }
+  }
+
+  image.addEventListener("load", checkImage);
+  checkImage();
+});
+
+// Initialise
+showPage(0);
+</script>
+
+</body>
+</html>
