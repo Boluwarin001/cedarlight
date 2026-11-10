@@ -130,6 +130,17 @@
             transform: rotateY(-180deg);
         }
 
+        /*
+          Only the face currently pointing at the viewer may receive
+          clicks. Without this the away-facing front cover (whose
+          whole face is a click target) sits over the left-hand page
+          and swallows taps meant for the back button.
+        */
+        .leaf:not(.flipped) .page-back,
+        .leaf.flipped .page-front {
+            pointer-events: none;
+        }
+
         .page-face {
             position: absolute;
             width: 100%;
@@ -542,7 +553,7 @@
 
                         <div style="height: 8px;"></div>
                     </div>
-                    <div class="corner-peel-left" onclick="flipPrev(1)">◄◄</div>
+                    <div class="corner-peel-left" onclick="flipPrev(1); event.stopPropagation();">◄◄</div>
                 </div>
             </div>
 
@@ -575,7 +586,7 @@
                             Turn the page ➔
                         </div>
                     </div>
-                    <div class="corner-peel" onclick="flipNext(2)">►►</div>
+                    <div class="corner-peel" onclick="flipNext(2); event.stopPropagation();">►►</div>
                 </div>
 
                 <!-- PAGE 4: SPREAD 2 LEFT (Vision & Mission + outreach-3.jpeg) -->
@@ -601,7 +612,7 @@
                             <div class="polaroid-caption">Healing the sick & winning souls</div>
                         </div>
                     </div>
-                    <div class="corner-peel-left" onclick="flipPrev(2)">◄◄</div>
+                    <div class="corner-peel-left" onclick="flipPrev(2); event.stopPropagation();">◄◄</div>
                 </div>
             </div>
 
@@ -645,7 +656,7 @@
                             <div class="polaroid-caption">Compassion in Action!</div>
                         </div>
                     </div>
-                    <div class="corner-peel" onclick="flipNext(3)">►►</div>
+                    <div class="corner-peel" onclick="flipNext(3); event.stopPropagation();">►►</div>
                 </div>
 
                 <!-- PAGE 6: SPREAD 3 LEFT (Christmas Blessings & Luke 2:11 / Jer 29:11) -->
@@ -673,7 +684,7 @@
 
                         <div style="height: 15px;"></div>
                     </div>
-                    <div class="corner-peel-left" onclick="flipPrev(3)">◄◄</div>
+                    <div class="corner-peel-left" onclick="flipPrev(3); event.stopPropagation();">◄◄</div>
                 </div>
             </div>
 
@@ -709,7 +720,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="corner-peel" onclick="flipNext(4)">►►</div>
+                    <div class="corner-peel" onclick="flipNext(4); event.stopPropagation();">►►</div>
                 </div>
 
                 <!-- PAGE 8: BACK COVER -->
@@ -828,7 +839,15 @@
             document.fonts.ready.then(fitBook);
         }
 
+        // How many leaves are currently turned over
+        let flippedCount = 0;
+
         function flipNext(leafNum) {
+            // Only the leaf on top of the unturned stack can turn
+            if (leafNum !== flippedCount + 1) return;
+
+            flippedCount = leafNum;
+
             leaves[leafNum].classList.add('flipped');
             setTimeout(() => {
                 leaves[leafNum].style.zIndex = leafNum + 1;
@@ -846,6 +865,11 @@
         }
 
         function flipPrev(leafNum) {
+            // Only the most recently turned leaf can turn back
+            if (leafNum !== flippedCount) return;
+
+            flippedCount = leafNum - 1;
+
             leaves[leafNum].classList.remove('flipped');
             setTimeout(() => {
                 leaves[leafNum].style.zIndex = (totalLeaves + 2) - leafNum;
@@ -862,12 +886,27 @@
             fitBook();
         }
 
-        function resetBook() {
-            flipPrev(4);
-            setTimeout(() => flipPrev(3), 180);
-            setTimeout(() => flipPrev(2), 360);
-            setTimeout(() => flipPrev(1), 540);
+        function goNext() {
+            flipNext(flippedCount + 1);
         }
+
+        function goPrev() {
+            flipPrev(flippedCount);
+        }
+
+        function resetBook() {
+            goPrev();
+            setTimeout(goPrev, 180);
+            setTimeout(goPrev, 360);
+            setTimeout(goPrev, 540);
+        }
+
+        // Keyboard: a reliable way back that does not depend on
+        // hitting the small corner target
+        document.addEventListener('keydown', event => {
+            if (event.key === 'ArrowRight') goNext();
+            if (event.key === 'ArrowLeft') goPrev();
+        });
     </script>
 </body>
 </html>
