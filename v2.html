@@ -93,26 +93,38 @@
             overflow: hidden;
             z-index: 5;
             margin-top: 10px;
-            transform: scale(var(--book-scale));
-            transform-origin: center center;
-            transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ================= 3D BOOK SETUP ================= */
+        /*
+          --book-scale is composed into the card's own transform
+          rather than applied to .stage, because .stage is the
+          element that clips overflow: scaling a clipping box
+          shrinks the clip rectangle and crops the card.
+
+          scale() comes first, so the translate below is expressed
+          in unscaled page units and shrinks along with the card.
+        */
         .book-wrapper {
             width: var(--page-width);
             height: var(--page-height);
             position: relative;
             perspective: 2400px;
+            transform: scale(var(--book-scale));
+            transform-origin: center center;
             transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* Shifts book so the open 2-page spread stays centered on screen */
         .book-wrapper.open {
-            transform: translateX(calc(var(--page-width) / 2));
+            transform:
+                scale(var(--book-scale))
+                translateX(calc(var(--page-width) / 2));
         }
         .book-wrapper.closed-end {
-            transform: translateX(var(--page-width));
+            transform:
+                scale(var(--book-scale))
+                translateX(var(--page-width));
         }
 
         /* Decorative stacked card behind closed book (EcardForest style) */
@@ -828,6 +840,7 @@
                 (narrow ? 78 : 60) + // footer trees + breathing room
                 parseFloat(getComputedStyle(stage).marginTop) +
                 24;
+
 
             /*
               documentElement.clientWidth is the layout viewport: it
