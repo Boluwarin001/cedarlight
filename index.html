@@ -428,6 +428,73 @@ document.querySelectorAll(
   checkImage();
 });
 
+// ===== RESPONSIVE: scale the whole card to fit the viewport =====
+const root = document.documentElement;
+const mainEl = document.querySelector("main");
+const introEl = document.querySelector(".intro");
+const headerEl = document.querySelector("header");
+const controlsEl = document.querySelector(".controls");
+
+function fitCard() {
+  const styles = getComputedStyle(root);
+
+  const cardWidth =
+    parseFloat(styles.getPropertyValue("--card-width"));
+
+  const cardHeight =
+    parseFloat(styles.getPropertyValue("--card-height"));
+
+  if (!cardWidth || !cardHeight) return;
+
+  const mainStyles = getComputedStyle(mainEl);
+
+  const sidePadding =
+    parseFloat(mainStyles.paddingLeft) +
+    parseFloat(mainStyles.paddingRight);
+
+  const verticalPadding =
+    parseFloat(mainStyles.paddingTop) +
+    parseFloat(mainStyles.paddingBottom);
+
+  // Space taken by everything that is not the card
+  const reserved =
+    headerEl.offsetHeight +
+    introEl.offsetHeight +
+    controlsEl.offsetHeight +
+    counter.offsetHeight +
+    verticalPadding +
+    58; // margins between those blocks
+
+  const availableWidth =
+    window.innerWidth - sidePadding;
+
+  const availableHeight =
+    window.innerHeight - reserved;
+
+  const scale = Math.max(
+    0.2,
+    Math.min(
+      1,
+      availableWidth / cardWidth,
+      availableHeight / cardHeight
+    )
+  );
+
+  root.style.setProperty(
+    "--card-scale",
+    Math.round(scale * 1000) / 1000
+  );
+}
+
+fitCard();
+
+window.addEventListener("resize", fitCard);
+window.addEventListener("orientationchange", fitCard);
+
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(fitCard);
+}
+
 // Initialise
 showPage(0);
 </script>
