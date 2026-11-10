@@ -153,7 +153,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px 20px 20px;
+  padding: 10px 16px 16px;
 }
 
 /* INTRO */
@@ -195,6 +195,7 @@ main {
 
 .book-area {
   position: relative;
+  isolation: isolate;
   width: calc(
     var(--card-width) * var(--card-scale)
   );
@@ -243,52 +244,96 @@ main {
   overflow: hidden;
   transform-origin: top left;
   transform: scale(var(--card-scale));
-  transform-style: preserve-3d;
 }
 
 /* PAGE ANIMATION */
 
 .page {
+  position: absolute;
+  inset: 0;
   display: none;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
   height: 100%;
   min-height: 0;
-  transform-origin: left center;
+  background: #fffdf7;
 }
 
 .page.active {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  animation: pageEnter .65s
-    cubic-bezier(.2,.75,.2,1) both;
+  z-index: 2;
+  animation: pageEnter .6s
+    cubic-bezier(.33,.9,.25,1) both;
 }
 
 .page.turn-back.active {
-  animation: pageBack .65s
-    cubic-bezier(.2,.75,.2,1) both;
+  animation: pageBack .6s
+    cubic-bezier(.33,.9,.25,1) both;
 }
+
+/* The page being swiped away slides out the other side */
+
+.page.leaving {
+  display: grid;
+  z-index: 1;
+  animation: pageExit .6s
+    cubic-bezier(.33,.9,.25,1) both;
+}
+
+.page.leaving.exit-back {
+  animation: pageExitBack .6s
+    cubic-bezier(.33,.9,.25,1) both;
+}
+
+/* Forward: the next page swipes in from the right */
 
 @keyframes pageEnter {
   from {
-    opacity: .15;
-    transform: rotateY(-22deg) translateX(22px);
+    opacity: .35;
+    transform: translateX(100%);
   }
 
   to {
     opacity: 1;
-    transform: rotateY(0) translateX(0);
+    transform: translateX(0);
   }
 }
 
+@keyframes pageExit {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: .35;
+    transform: translateX(-28%);
+  }
+}
+
+/* Backward: the previous page swipes back in from the left */
+
 @keyframes pageBack {
   from {
-    opacity: .15;
-    transform: rotateY(22deg) translateX(-22px);
+    opacity: .35;
+    transform: translateX(-100%);
   }
 
   to {
     opacity: 1;
-    transform: rotateY(0) translateX(0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes pageExitBack {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: .35;
+    transform: translateX(28%);
   }
 }
 
@@ -597,8 +642,16 @@ main {
 /* NAVIGATION */
 
 .controls {
-  width: calc(
-    var(--card-width) * var(--card-scale)
+  /*
+    Follows the scaled card width, but never squashes below a
+    width that fits both buttons comfortably.
+  */
+  width: min(
+    100%,
+    max(
+      calc(var(--card-width) * var(--card-scale)),
+      460px
+    )
   );
   display: flex;
   align-items: center;
@@ -609,6 +662,8 @@ main {
 }
 
 .nav-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
   border: 1px solid #afcfdb;
   border-radius: 30px;
   padding: 11px 22px;
@@ -633,9 +688,11 @@ main {
 }
 
 .dots {
+  flex: 1;
   display: flex;
   gap: 9px;
   align-items: center;
+  justify-content: center;
 }
 
 .dot {
@@ -694,18 +751,16 @@ main {
 /* MOBILE LAYOUT */
 
 /*
-  On phones the card becomes portrait and the panels stack as
-  grid ROWS, but the card keeps fixed pixel dimensions and is
-  scaled down as a whole by --card-scale, so the entire card is
-  visible at once with no page scrolling.
+  The card keeps its landscape two-panel spread on phones - left
+  and right panels stay SIDE BY SIDE. It keeps fixed pixel design
+  dimensions and the whole card is scaled down by --card-scale so
+  the complete spread is visible at once.
+
+  Type inside the card is nudged up a little, since everything
+  gets multiplied by a scale of roughly 0.4 on a phone.
 */
 
 @media (max-width: 720px) {
-  :root {
-    --card-width: 400px;
-    --card-height: 700px;
-  }
-
   header {
     padding: 10px 16px;
   }
@@ -748,116 +803,95 @@ main {
     left: 4px;
   }
 
-  /* Portrait card: two stacked panels */
-  .page.active {
-    grid-template-columns: 1fr;
-    grid-template-rows: 40% 60%;
-  }
-
   .panel {
-    padding: 24px 22px;
-    justify-content: flex-start;
+    padding: 26px 28px;
     overflow-y: auto;
   }
 
-  .cover {
-    justify-content: center;
-  }
-
-  .cover::before {
-    inset: 12px;
-  }
+  /* Cover panel has room to breathe, so push it furthest */
 
   .cover-logo {
-    width: 74px;
-    height: 74px;
-    margin-bottom: 12px;
+    width: 112px;
+    height: 112px;
+    margin-bottom: 18px;
   }
 
   .script {
-    font-size: 52px;
+    font-size: 84px;
   }
 
   .cover h2 {
-    font-size: 14px;
-    margin: 12px 0 16px;
+    font-size: 23px;
+    letter-spacing: 3px;
+    margin: 18px 0 22px;
+  }
+
+  .cover p {
+    font-size: 15px;
+  }
+
+  .gold-line {
+    width: 85px;
   }
 
   .gold-star {
-    font-size: 42px;
-    margin-bottom: 16px;
+    font-size: 70px;
   }
 
-  .panel.paper::before {
-    top: 0;
-    bottom: auto;
-    left: 0;
-    right: 0;
-    width: auto;
-    height: 1px;
-    box-shadow: 0 3px 10px #0000000c;
-  }
+  /* Text panels: a modest bump, they are already full */
 
-  .panel.paper::after {
-    font-size: 24px;
-    right: 16px;
-    bottom: 8px;
+  .small-title {
+    font-size: 13px;
+    margin-bottom: 12px;
   }
 
   .paper h2 {
-    font-size: 23px;
-    margin-bottom: 10px;
+    font-size: 37px;
   }
 
   .paper p {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 1.6;
-    margin-bottom: 9px;
   }
 
   .quote {
-    font-size: 14px !important;
+    font-size: 18px !important;
     line-height: 1.5 !important;
   }
 
-  .gold-rule {
-    margin: 4px 0 12px;
+  .verse {
+    font-size: 12px;
   }
 
   .signature {
-    font-size: 26px;
+    font-size: 38px;
   }
 
-  .photo-panel,
-  .gallery-panel {
-    min-height: 0;
-    height: 100%;
+  .panel.paper::after {
+    font-size: 38px;
   }
 
   .photo-placeholder .symbol {
-    font-size: 40px;
+    font-size: 62px;
   }
 
   .photo-placeholder strong {
-    font-size: 20px;
+    font-size: 28px;
   }
 
-  .gallery-panel {
-    padding: 12px;
-  }
-
-  .gallery {
-    gap: 8px;
+  .photo-placeholder small {
+    font-size: 14px;
   }
 
   .gallery-fallback {
-    font-size: 11px;
-    gap: 6px;
+    font-size: 15px;
   }
 
   .gallery-fallback span {
-    font-size: 26px;
+    font-size: 40px;
   }
+
+  /* Navigation below the card */
 
   .nav-btn {
     padding: 10px 14px;
@@ -870,15 +904,6 @@ main {
 
   .counter {
     margin-top: 8px;
-  }
-}
-
-/* VERY NARROW PHONES */
-
-@media (max-width: 380px) {
-  :root {
-    --card-width: 360px;
-    --card-height: 660px;
   }
 }
 

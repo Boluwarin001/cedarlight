@@ -44,7 +44,7 @@
     <div class="book" id="book">
 
       <!-- PAGE 1: CHRISTMAS COVER -->
-      <section class="page active">
+      <section class="page">
 
         <div class="panel cover">
           <img class="cover-logo" src="logo.jpeg" alt="Ministry logo">
@@ -297,23 +297,53 @@ pages.forEach((page, index) => {
   dotsContainer.appendChild(dot);
 });
 
+let leaveTimer = null;
+
 function showPage(index) {
   if (index < 0 || index >= pages.length) return;
+  if (index === currentPage && pages[index].classList.contains("active")) {
+    return;
+  }
 
   previousPage = currentPage;
   currentPage = index;
+
+  const goingBack = currentPage < previousPage;
+
+  // Swipe: the old page slides out while the new one slides in
+  if (leaveTimer) {
+    clearTimeout(leaveTimer);
+    pages.forEach(page =>
+      page.classList.remove("leaving", "exit-back")
+    );
+  }
+
+  const outgoing = pages[previousPage];
 
   pages.forEach((page, i) => {
     page.classList.remove("active", "turn-back");
 
     if (i === currentPage) {
-      if (currentPage < previousPage) {
+      if (goingBack) {
         page.classList.add("turn-back");
       }
 
       page.classList.add("active");
     }
   });
+
+  if (outgoing && outgoing !== pages[currentPage]) {
+    outgoing.classList.add("leaving");
+
+    if (goingBack) {
+      outgoing.classList.add("exit-back");
+    }
+
+    leaveTimer = setTimeout(() => {
+      outgoing.classList.remove("leaving", "exit-back");
+      leaveTimer = null;
+    }, 620);
+  }
 
   Array.from(dotsContainer.children).forEach((dot, i) => {
     dot.classList.toggle("active", i === currentPage);
@@ -463,20 +493,40 @@ function fitCard() {
     controlsEl.offsetHeight +
     counter.offsetHeight +
     verticalPadding +
-    58; // margins between those blocks
+    50; // margins between those blocks
 
+  /*
+    mainEl.clientWidth excludes any scrollbar, so it is a safer
+    measure of real available space than window.innerWidth.
+  */
   const availableWidth =
-    window.innerWidth - sidePadding;
+    (mainEl.clientWidth || window.innerWidth) - sidePadding;
 
   const availableHeight =
     window.innerHeight - reserved;
 
+  /*
+    Allow the card to grow past its design size on roomy screens
+    so the main area is actually filled, not just shrink on small
+    ones.
+  */
+  const isMobile = window.innerWidth <= 720;
+
+  const maxScale = isMobile ? 1 : 1.45;
+
+  /*
+    A little headroom so the card's shadow, the offset paper
+    stack behind it and any rounding never touch the screen
+    edge.
+  */
+  const safety = isMobile ? 0.9 : 0.97;
+
   const scale = Math.max(
     0.2,
     Math.min(
-      1,
-      availableWidth / cardWidth,
-      availableHeight / cardHeight
+      maxScale,
+      (availableWidth / cardWidth) * safety,
+      (availableHeight / cardHeight) * safety
     )
   );
 
