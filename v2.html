@@ -33,15 +33,32 @@
             user-select: none;
         }
 
+        /*
+          The card is a fixed-size element that gets scaled, so its
+          untransformed layout box can be wider than a phone screen.
+          Lock the document to the viewport so that never turns into
+          a sideways scrollbar (which would also knock the centred
+          card off-centre).
+        */
+        html {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background: linear-gradient(180deg, var(--bg-teal) 0%, #2a7a94 70%, #eef6f8 100%);
             font-family: 'Quicksand', sans-serif;
+            width: 100%;
+            max-width: 100%;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            overscroll-behavior: none;
             position: relative;
         }
 
@@ -72,6 +89,8 @@
             align-items: center;
             justify-content: center;
             width: 100%;
+            max-width: 100%;
+            overflow: hidden;
             z-index: 5;
             margin-top: 10px;
             transform: scale(var(--book-scale));
@@ -452,7 +471,7 @@
                 top: 10px;
                 padding: 7px 14px;
                 font-size: 0.72rem;
-                max-width: 94vw;
+                max-width: 92%;
                 text-align: center;
                 line-height: 1.3;
             }
@@ -801,7 +820,8 @@
                 ? pageWidth * 2
                 : pageWidth;
 
-            const narrow = window.innerWidth <= 820;
+            const narrow =
+                (docRoot.clientWidth || window.innerWidth) <= 820;
 
             const reservedHeight =
                 topBar.offsetHeight +
@@ -809,8 +829,16 @@
                 parseFloat(getComputedStyle(stage).marginTop) +
                 24;
 
+            /*
+              documentElement.clientWidth is the layout viewport: it
+              excludes any scrollbar, unlike window.innerWidth.
+            */
+            const viewportWidth =
+                docRoot.clientWidth || window.innerWidth;
+
             const availableWidth =
-                window.innerWidth - (narrow ? 16 : 48);
+                (viewportWidth - (narrow ? 20 : 48)) *
+                (narrow ? 0.96 : 1);
 
             const availableHeight =
                 window.innerHeight - reservedHeight;
